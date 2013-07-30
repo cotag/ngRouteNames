@@ -1,4 +1,0 @@
-ngNamedRoutes
-=============
-
-AngularJS Named Routes

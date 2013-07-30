@@ -1,0 +1,124 @@
+h1. ngRouteNames - AngularJS Named Routes
+
+A route provider and ng-href replacement for advanced routing and mobile device support
+The @goto@ directive depends on "Angular Gesture":https://github.com/cotag/bower-angular-gesture so the links are response on mobile devices
+
+
+h2. Defining Routes
+
+Routes are defined in the same way as regluar AngularJS routes with two differences:
+
+# Use of @$routeNamesProvider@ in replacement of @$routeProvider@
+# Supplying a name for the route
+
+Example 1:
+
+<pre><code class="javascript">
+
+angular.module('ExampleApp', ['ngRouteNames'])
+
+.config(['$routeNamesProvider', '$locationProvider', function ($routeProvider) {
+
+  $routeProvider
+    .when('/', {
+      templateUrl: 'views/view1.html',
+      name: 'home'
+    })
+    .when('/view2', {
+      templateUrl: 'views/view2.html',
+      name: 'view2'
+    })
+    .when('/:user/view3', {
+      templateUrl: 'views/view3.html',
+      name: 'view3'
+    })
+    .when('/:user/view4', {
+      templateUrl: 'views/view4.html',
+      name: 'view4'
+    })
+    .otherwise({
+      redirectTo: '/'
+    });
+
+    $routeProvider.activeClass = 'is-active';	// This is the default
+
+}]).
+
+controller('SomeCtrl', ['$scope', '$route', '$http', function ($scope, $route, $http) {
+	$scope.funcToCall = function() {
+		// Simple:
+		$route.to.view4();
+
+		// defining params and search params (both optional)
+		$route.to.view4({
+				user: 'steve'
+			},
+			{
+				using: 'search',
+				params: 'is optional too'
+		});
+	};
+}]);
+
+</code></pre>
+
+
+h2. Defining links in the view:
+
+* Links are defined using the @goto@ directive and should be used instead of @ng-href@.
+* They are not limited to use on @<div goto="route-name">link tags</div>@
+* Use attributes to define route parameters for @<a goto="route-name" param1="somedata" param2="more">Specific links</a>@
+
+Example 2 (using the routes from example 1):
+
+<pre><code class="html">
+
+<img src="logo.jpg" goto="home" />
+<nav>
+	<ul>
+		<li><a goto="view2">View2</a></li>
+		<li><a goto="view3" user="steve">View3</a></li>
+		<li><a goto="view4">View4</a></li> <!-- will use existing user param if defined in the current url -->
+	</ul>
+</nav>
+
+</code></pre>
+
+
+h2. Highlighting any active links
+
+* @'is-active'@ is defined as the default active class.
+** The first example indicates how you can change this
+** Any link defined with @goto@ will have this class when the current url matches.
+* Links defined with @goto@ will have the route name added as a class
+
+Note: If you are looking to highlight a higher dom element such as the @li@ elements in example 2 you can do the following:
+
+<pre><code class="html">
+
+<nav>
+	<ul>
+		<!-- apply the class 'active' when the route name matches -->
+		<li ng-class="{active: $route.current.name === 'view2'}">
+			<a goto="view2">View2</a>
+		</li>
+	</ul>
+</nav>
+
+</code></pre>
+
+
+h2. Adding search params
+
+*Experimental - issues / feedback welcome*
+
+A param named @search@ is reserved for defining search params. This param is $parsed so it must be valid javascript returning a string or object that will be used as the search parameters
+
+Examples:
+
+* @<a goto="search" search="{param1:'somedata', param2:'more data'}"></a>@ as an object
+* @<a goto="search" search="'param1=somedata&param2=more data'"></a>@ as a string
+* @<a goto="search" search="someFunction();"></a>@ as a function call
+
+Note: the context for the search paramater is @$scope@ when using @goto@
+
