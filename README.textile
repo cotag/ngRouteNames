@@ -1,7 +1,9 @@
-h1. ngRouteNames - AngularJS Named Routes
+h1. ngRouteNames
+
+- AngularJS Named Routes
 
 A route provider and ng-href replacement for advanced routing and mobile device support
-The @goto@ directive depends on "Angular Gesture":https://github.com/cotag/bower-angular-gesture so the links are response on mobile devices
+The @goto@ directive depends on "Angular Gesture":https://github.com/cotag/bower-angular-gesture so the links are responsive on mobile devices
 
 
 h2. Defining Routes
@@ -13,8 +15,7 @@ Routes are defined in the same way as regluar AngularJS routes with two differen
 
 Example 1:
 
-<pre><code class="javascript">
-
+<pre lang="javascript"><code>
 angular.module('ExampleApp', ['ngRouteNames'])
 
 .config(['$routeNamesProvider', '$locationProvider', function ($routeProvider) {
@@ -71,8 +72,7 @@ h2. Defining links in the view:
 
 Example 2 (using the routes from example 1):
 
-<pre><code class="html">
-
+<pre lang="html"><code>
 <img src="logo.jpg" goto="home" />
 <nav>
 	<ul>
@@ -94,8 +94,7 @@ h2. Highlighting any active links
 
 Note: If you are looking to highlight a higher dom element such as the @li@ elements in example 2 you can do the following:
 
-<pre><code class="html">
-
+<pre lang="html"><code>
 <nav>
 	<ul>
 		<!-- apply the class 'active' when the route name matches -->
