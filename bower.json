@@ -1,0 +1,9 @@
+{
+  "name": "ngRouteNames",
+  "version": "1.0.0",
+  "main": "./ngRouteNames.js",
+  "dependencies": {
+    "angular-unstable": "~1.1.5",
+    "angular-gesture": "~1.1.5"
+  }
+}
