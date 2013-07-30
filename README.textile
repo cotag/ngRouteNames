@@ -118,6 +118,7 @@ Examples:
 * @<a goto="search" search="{param1:'somedata', param2:'more data'}"></a>@ as an object
 * @<a goto="search" search="'param1=somedata&param2=more data'"></a>@ as a string
 * @<a goto="search" search="someFunction();"></a>@ as a function call
+* @<a goto="search" search="true"></a>@ maintain any existing search params
 
 Note: the context for the search paramater is @$scope@ when using @goto@
 
