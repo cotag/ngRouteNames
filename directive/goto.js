@@ -28,7 +28,11 @@
 
                             // if this is an A element then we want to set the href
                             if (isLink) {
-                                element.attr('href', url[0] + '?' + url[1]);
+                                if (url[1].length > 0) {
+                                    element.attr('href', url[0] + '?' + url[1]);
+                                } else {
+                                    element.attr('href', url[0]);
+                                }
                             }
                         };
 
