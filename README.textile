@@ -1,6 +1,6 @@
 h1. ngRouteNames
 
-- AngularJS Named Routes
+- AngularJS Named Routes !https://travis-ci.org/cotag/ngRouteNames-tests.png?branch=master!:https://travis-ci.org/cotag/ngRouteNames-tests
 
 A route provider and ng-href replacement for advanced routing and mobile device support
 The @goto@ directive depends on "Angular Gesture":https://github.com/cotag/bower-angular-gesture so the links are responsive on mobile devices
