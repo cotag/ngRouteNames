@@ -1,7 +1,7 @@
 (function (angular) {
     'use strict';
 
-    angular.module('ngRouteNames', ['ngMobile'])
+    angular.module('ngRouteNames', ['ngGesture'])
 
         .provider('$routeNames', ['$routeProvider', function ($routeProvider) {
             var namedRoutes = {},

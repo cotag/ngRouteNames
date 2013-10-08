@@ -1,9 +1,9 @@
 {
   "name": "ngRouteNames",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "./ngRouteNames.js",
   "dependencies": {
     "angular": "~1.2.0",
-    "angular-gesture": "~1.1.8"
+    "angular-gesture": "~1.2.0"
   }
 }

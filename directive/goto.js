@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('ngRouteNames')
-        .directive('goto', ['$route', '$location', '$mobileClick', '$parse', function ($route, $location, $mobile, $parse) {
+        .directive('goto', ['$route', '$location', '$gestureClick', '$parse', function ($route, $location, $mobile, $parse) {
             return {
                 scope: false,
                 restrict: 'A',
