@@ -52,7 +52,7 @@
                     scope.$on('$routeChangeSuccess', updateLink);
 
                     // Follow clicks using mobile events where available
-                    $mobile.gestureOn(element, 'tap', attrs).bind('tap', function (event) {
+                    $mobile.gestureOn(element, 'tap', attrs).on('tap', function (event) {
                         scope.$apply(function () {
                             $location.path(url[0]).search(url[1]);    // Use the previously processed path
                         });
