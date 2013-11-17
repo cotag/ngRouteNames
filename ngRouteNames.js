@@ -5,7 +5,8 @@
 
         .provider('$routeNames', ['$routeProvider', function ($routeProvider) {
             var namedRoutes = {},
-                paramMatcher = /(?:\:)(.*?)(?:(\/|$)\/?)/gm;
+                paramMatcher = /(?:\:)(.*?)(?:(\/|$)\/?)/gm,
+                pendingRoutes = [];
 
             this.when = function (path, route) {
                 if (route.name) {
@@ -35,7 +36,7 @@
             this.otherwise = $routeProvider.otherwise;
             this.activeClass = 'is-active';
 
-            this.$get = ['$interpolate', '$route', '$routeParams', '$location', function ($interpolate, $route, $routeParams, $location) {
+            this.$get = ['$interpolate', '$route', '$routeParams', '$location', '$q', '$rootScope', function ($interpolate, $route, $routeParams, $location, $q, $rootScope) {
                 var result,
                     checkSearch = function (searchParams, asString) {
                         // Are search params involved?
@@ -70,6 +71,27 @@
                         return '';
                     };
 
+                // Resolve route changes
+                $rootScope.$on('$routeChangeSuccess', function(event, current, previous) {
+                    var name = $route.current.name,
+                        params = arguments,
+                        i;
+
+                    if (name === undefined) {
+                        return;
+                    }
+
+                    for (i = 0; i < pendingRoutes.length; i++) {
+                        if (pendingRoutes[i][0] === name) {
+                            pendingRoutes[i][1].resolve(params);
+                        } else {
+                            pendingRoutes[i][1].reject(params);
+                        }
+                    }
+
+                    pendingRoutes = [];
+                });
+
                 // Create an interpolation function for the routes
                 angular.forEach(namedRoutes, function (route, name) {
                     result = $interpolate(route, true);
@@ -88,9 +110,14 @@
                     if (typeof route === 'function') {
                         // For routes where interpolation is required
                         $route.to[name] = function (params, search) {
+                            var defer = $q.defer();
+
                             params = angular.extend({}, $routeParams, params);
                             $location.path(route(params));
                             checkSearch(search, false);
+
+                            pendingRoutes.push([name, defer]);
+                            return defer.promise;
                         };
                         $route.pathTo[name] = function (params, search) {
                             params = angular.extend({}, $routeParams, params);
@@ -99,8 +126,13 @@
                     } else {
                         // Less processing for static routes
                         $route.to[name] = function (params, search) {
+                            var defer = $q.defer();
+
                             $location.path(route);
                             checkSearch(search, false);
+
+                            pendingRoutes.push([name, defer]);
+                            return defer.promise;
                         };
                         $route.pathTo[name] = function (params, search) {
                             return [route, checkSearch(search, true)];
