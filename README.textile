@@ -2,13 +2,13 @@ h1. ngRouteNames
 
 - AngularJS Named Routes !https://travis-ci.org/cotag/ngRouteNames-tests.png?branch=master!:https://travis-ci.org/cotag/ngRouteNames-tests
 
-A route provider and ng-href replacement for advanced routing and mobile device support
-The @goto@ directive depends on "Angular Gesture":https://github.com/cotag/bower-angular-gesture so the links are responsive on mobile devices
+A route provider and ng-href add-on for advanced routing and mobile device support
+The @goto@ directive depends on "Angular Gesture":https://github.com/cotag/bower-angular-gesture so the links are responsive on all mobile devices
 
 h3. Installing
 
 # Open bower.json or components.json
-# Add @"ngRouteNames": "~1.0.1"@ to your dependency list
+# Add @"ngRouteNames": "~1.1.1"@ to your dependency list
 # Run @bower install@
 # In your application you can now add: (depending on what you need)
 #* @<script src="components/ngRouteNames/ngRouteNames.js"></script>@
@@ -17,10 +17,12 @@ h3. Installing
 
 h2. Defining Routes
 
-Routes are defined in the same way as regluar AngularJS routes with two differences:
+Routes are defined in the same way as regluar AngularJS routes with the following differences:
 
 # Use of @$routeNamesProvider@ in replacement of @$routeProvider@
 # Supplying a name for the route
+# Provides a promise that is resolved once navigation is complete
+
 
 Example 1:
 
@@ -67,6 +69,14 @@ controller('SomeCtrl', ['$scope', '$route', '$http', function ($scope, $route, $
 				using: 'search',
 				params: 'is optional too'
 		});
+
+        // Promises:
+        $route.to.view4().then(function() {
+            // Update elements on the page or trigger functions.
+            // Great for things like using HTML5 fullscreen where
+            // Updating the route after making an element
+            // fullscreen will cause fullscreen to exit.
+        });
 	};
 }]);
 
@@ -129,5 +139,5 @@ Examples:
 * @<a goto="search" search="someFunction();"></a>@ as a function call
 * @<a goto="search" search="true"></a>@ maintain any existing search params
 
-Note: the context for the search paramater is @$scope@ when using @goto@
+Note: the context for the search parameter is the current @$scope@ when using @goto@
 
