@@ -56,7 +56,7 @@
                                     index;
 
                                 for (index in searchParams) {
-                                    if (searchParams.hasOwnProperty(index)) {
+                                    if (searchParams.hasOwnProperty(index) && searchParams[index] !== undefined) {
                                         searchString += index + '=' + searchParams[index] + '&';
                                     }
                                 }
