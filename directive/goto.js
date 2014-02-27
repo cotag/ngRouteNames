@@ -6,8 +6,8 @@
 
     angular.module('ngRouteNames')
         .config(['$locationProvider', function ($locationProvider) {
-            prefix = $locationProvider.hashPrefix();
-        })
+            hashPrefix = $locationProvider.hashPrefix();
+        }])
         .directive('goto', ['$route', '$location', '$gestureClick', '$parse', function ($route, $location, $mobile, $parse) {
             return {
                 scope: false,
