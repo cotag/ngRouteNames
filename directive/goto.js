@@ -28,7 +28,7 @@
                             }
                         },
                         updateLink = function () {
-                            var prefix = $location.$$html5 ? hashPrefix : emptyString;
+                            var prefix = $location.$$html5 ? emptyString : hashPrefix;
                             
                             updateActive();
                             // path is our cached goto function, search is our parsed search param
