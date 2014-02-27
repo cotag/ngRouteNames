@@ -1,6 +1,6 @@
 {
   "name": "ngRouteNames",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "main": "./ngRouteNames.js",
   "dependencies": {
     "angular": "~1.2.6",
