@@ -1,7 +1,13 @@
 (function (angular) {
     'use strict';
+    
+    var hashPrefix,
+        emptyString = '';
 
     angular.module('ngRouteNames')
+        .config(['$locationProvider', function ($locationProvider) {
+            prefix = $locationProvider.hashPrefix();
+        })
         .directive('goto', ['$route', '$location', '$gestureClick', '$parse', function ($route, $location, $mobile, $parse) {
             return {
                 scope: false,
@@ -22,6 +28,8 @@
                             }
                         },
                         updateLink = function () {
+                            var prefix = $location.$$html5 ? hashPrefix : emptyString;
+                            
                             updateActive();
                             // path is our cached goto function, search is our parsed search param
                             url = path(attrs, search(scope, {}));
@@ -29,9 +37,9 @@
                             // if this is an A element then we want to set the href
                             if (isLink) {
                                 if (url[1].length > 0) {
-                                    element.attr('href', url[0] + '?' + url[1]);
+                                    element.attr('href', prefix + url[0] + '?' + url[1]);
                                 } else {
-                                    element.attr('href', url[0]);
+                                    element.attr('href', prefix + url[0]);
                                 }
                             }
                         };
