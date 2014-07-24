@@ -51,7 +51,7 @@
                         delete attrs.search;
                     } else {
                         // no-op function unless search exists
-                        search = function () {};
+                        search = angular.noop;
                     }
                     updateLink();
 
