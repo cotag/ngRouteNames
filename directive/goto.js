@@ -2,13 +2,15 @@
     'use strict';
     
     var hashPrefix,
-        emptyString = '';
+        emptyString = '',
+        mod = angular.module('ngRouteNames');
 
-    angular.module('ngRouteNames')
-        .config(['$locationProvider', function ($locationProvider) {
+        mod.value('GOTO_SEARCH_DEFAULT', angular.noop);
+    
+        mod.config(['$locationProvider', function ($locationProvider) {
             hashPrefix = '#' + $locationProvider.hashPrefix();
         }])
-        .directive('goto', ['$route', '$location', '$gestureClick', '$parse', function ($route, $location, $mobile, $parse) {
+        .directive('goto', ['$route', '$location', '$gestureClick', '$parse', 'GOTO_SEARCH_DEFAULT', function ($route, $location, $mobile, $parse, GOTO_SEARCH_DEFAULT) {
             return {
                 scope: false,
                 restrict: 'A',
@@ -51,7 +53,7 @@
                         delete attrs.search;
                     } else {
                         // no-op function unless search exists
-                        search = angular.noop;
+                        search = GOTO_SEARCH_DEFAULT;
                     }
                     updateLink();
 
@@ -74,4 +76,5 @@
                 }
             };
         }]);
+
 }(this.angular));
