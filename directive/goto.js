@@ -63,8 +63,22 @@
 
                     // Follow clicks using mobile events where available
                     $mobile.gestureOn(element, 'tap', attrs).on('tap', function (event) {
+                        var search = url[1],
+                            actual,
+                            keep;
+
+                        if (attrs.keep) {
+                            keep = attrs.keep.split(',');
+                            actual = $location.search();
+                            angular.forEach(keep, function (val) {
+                                if (actual[val]) {
+                                    search = search + '&' + val + '=' + actual[val];
+                                }
+                            });
+                        }
+
                         scope.$apply(function () {
-                            $location.path(url[0]).search(url[1]);    // Use the previously processed path
+                            $location.path(url[0]).search(search);    // Use the previously processed path
                         });
                         if (attrs.preventDefault === 'true') {
                             event.preventDefault();
